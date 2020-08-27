@@ -70,7 +70,7 @@ WHERE
     c.PROXIMO_VENCIMIENTO = '2020-08-27';
 ```
 
-### 05: Ahora verifica si los registros fueron creados en la tabla
+### 05: Ahora verifica si los registros fueron creados en la tabla con los registros
 
 ```SQL
 SELECT count(*) FROM _tmp_mibanco_sobre_out_26;
@@ -131,7 +131,7 @@ Ir al menu hamburguesa:
 ### 11: Verificar datos cargados: en el server MiBancoBOT
 
 	server: 172.16.80.5:3306
-	db: xxxxx
+	db: mibanco
 	user: root
 	password: *****
 
