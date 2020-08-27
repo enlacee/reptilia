@@ -1,7 +1,7 @@
 # Doc MiBanco-BOT
 
-[link text](docs/elena-bot.md)
-[link text](docs/maria-bot.md)
+* [Documentación Elena bot](docs/elena-bot.md)
+* [Documentación Maria bot](docs/maria-bot.md)
 
 
 ### Requisitos ideales
