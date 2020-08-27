@@ -18,7 +18,7 @@
 	server: 192.168.20.150:3306
 	db: bda_sion
 	user: root
-	password: _BDC0br4nz4%
+	password: *****
 
 
 ### 02: Importar y crea tabla Automatico de los datos del archivo **BOT_26.xlsx** con el nombre **_tmp_bot_260820** que es el formato DD-MM-YY.
@@ -32,7 +32,7 @@
 ### 03: Verificar si la tabla fue creada
 	
 ```SQL
-	SELECT * FROM _tmp_bot_260820 LIMIT 1;
+SELECT * FROM _tmp_bot_260820 LIMIT 1;
 ```
 
 ### 04: Crear campos y tabla: **_tmp_mibanco_sobre_out_26**
@@ -40,9 +40,9 @@
 ` Ojo que el campo PROXIMO_VENCIMIENTO = 27. Se le suma 1 dia`
 
 ```SQL
-	ALTER TABLE _tmp_bot_260820 add column `Numero Asesor` varchar(100);
-	ALTER TABLE _tmp_bot_260820 add column `Asesor` varchar(100);
-	ALTER TABLE _tmp_bot_260820 CHANGE `COD_CLIENTE` `idcliente` varchar(100);
+ALTER TABLE _tmp_bot_260820 add column `Numero Asesor` varchar(100);
+ALTER TABLE _tmp_bot_260820 add column `Asesor` varchar(100);
+ALTER TABLE _tmp_bot_260820 CHANGE `COD_CLIENTE` `idcliente` varchar(100);
 ```
 
 Esta siguiente sentencia no tiene (punto y coma) `;`.
@@ -50,30 +50,30 @@ Esto es para que creé la tabla y la siguiente consulta SQL
 lo cargue en la tabla automaticamente.
 
 ```SQL
-	CREATE TABLE _tmp_mibanco_sobre_out_26
-	SELECT 
-	    c.DOCUMENTO codigo,
-	    c.NOMBRE_CLIENTE nombre,
-	    'pen' moneda,
-	    c.saldo_soles monto,
-	    c.producto,
-	    c.nro_celular numero,
-	    c.nro_celular numero_act,
-	    c.PROXIMO_VENCIMIENTO fecha,
-	    t.`Numero Asesor` numero_asesor,
-	    t.asesor
-	FROM
-	    _tmp_bot_260820 t
-	        INNER JOIN
-	    BOT20_PRUEBA_DATA c ON t.idcliente = c.CODIGO_CLIENTE
-	WHERE
-	    c.PROXIMO_VENCIMIENTO = '2020-08-27';
+CREATE TABLE _tmp_mibanco_sobre_out_26
+SELECT 
+    c.DOCUMENTO codigo,
+    c.NOMBRE_CLIENTE nombre,
+    'pen' moneda,
+    c.saldo_soles monto,
+    c.producto,
+    c.nro_celular numero,
+    c.nro_celular numero_act,
+    c.PROXIMO_VENCIMIENTO fecha,
+    t.`Numero Asesor` numero_asesor,
+    t.asesor
+FROM
+    _tmp_bot_260820 t
+        INNER JOIN
+    BOT20_PRUEBA_DATA c ON t.idcliente = c.CODIGO_CLIENTE
+WHERE
+    c.PROXIMO_VENCIMIENTO = '2020-08-27';
 ```
 
 ### 05: Ahora verifica si los registros fueron creados en la tabla
 
 ```SQL
-	SELECT count(*) FROM _tmp_mibanco_sobre_out_26;
+SELECT count(*) FROM _tmp_mibanco_sobre_out_26;
 ```
 
 ### 06: Exportar archivo en formato .xlsx
@@ -93,7 +93,7 @@ lo cargue en la tabla automaticamente.
 	
 	URL=http://172.16.20.7:5000/
 	user: alvaro
-	password: _varO123+
+	password: *****
 
 ### 08: Configurar DASHBOARD
 
@@ -133,10 +133,10 @@ Ir al menu hamburguesa:
 	server: 172.16.80.5:3306
 	db: xxxxx
 	user: root
-	password: vicidial
+	password: *****
 
 ```SQL
-	select * from tbl_client_data where list_id = 80260820;
+select * from tbl_client_data where list_id = 80260820;
 ```
 
 Aquí verificar cuantos registros se guardarón y verificar algún registro para mayor seguridad.
