@@ -5,7 +5,7 @@
 
 ## Estandar Nomenclatura
 
-EMPRESAS: 	MiBanco, Movistar
+EMPRESAS: 	MiBanco, Movistar  
 CAMPAÑA:	Proyecto que se lleva con la finalidad de alcanzar un objetivo.
 
 	- Campaña
