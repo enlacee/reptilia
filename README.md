@@ -1,6 +1,6 @@
 # Carga miBanco
 
-1. [Documentación Carga Data miBanco](docs/elena-bot.md)
+1. [Documentación Carga Data miBanco](docs/01-carga-mibanco.md)
 2. 
 
 ## Estandar Nomenclatura
@@ -15,13 +15,13 @@ CAMPAÑA:	Proyecto que se lleva con la finalidad de alcanzar un objetivo.
 Prefijos para manejar con relativo orden el sistema de carga.
 
 CAMPAÑAS:
-	
+
 	70 -> Pruebas QAS
 	80 -> MiBanco
 	90 -> Movistar
 
 LISTAS: `80270820`
-	
+
 	80 -> codigo de campaña
 	27 -> dia
 	08 -> mes
