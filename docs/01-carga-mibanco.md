@@ -3,7 +3,6 @@
 * [Documentación Carga MiBanco bot](docs/01-carga-mibanco.md)
 
 
-
 ### Requisitos ideales
 
 	* SO Linux Ubuntu 18
@@ -87,7 +86,7 @@ SELECT count(*) FROM _tmp_mibanco_sobre_out_26;
 `revisar los campos critos del archivo _tmp_mibanco_sobre_out_26.xlsx` 
 
 	monto = en decimales
-	fecha = formato Y-m-d -> 2020-08-27
+	fecha = formato Y-m-d -> verificar la fecha de vencimiento: 2020-08-27
 
 ### 07: Aplicación web: Hacer la carga de data
 	
@@ -144,5 +143,5 @@ Aquí verificar cuantos registros se guardarón y verificar algún registro para
 Verficar los siguientes campos
 
 	client_id	-> que coincida al nombre de usuario del excel
-	create_at   -> fecha hoy registrado
+	create_at	-> fecha hoy registrado
 	list_id		-> id de lista.
