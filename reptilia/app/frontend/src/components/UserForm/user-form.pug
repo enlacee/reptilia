@@ -1,0 +1,166 @@
+.user-form-container
+    .row.justify-end.q-mb-lg
+        q-btn(
+            color = "blue-grey-7"
+            icon = "add"
+            @click = "isNew = true"
+            round
+            fab
+        )
+
+    .user-list
+        q-table.bg-blue-grey-14(
+            :data = "data"
+            :columns = "columns"
+            row-key = "user"
+            :pagination.sync = "pagination"
+            :grid = "$q.screen.lt.sm"
+            table-header-class = "bg-teal-9"
+            dark
+        )
+            template(
+                v-slot:top-row = "props"
+            )
+                q-tr(
+                    v-if="isNew"
+                )
+                    q-td(
+                        key = "number"
+                    ) #
+                    q-td(
+                        key = "user"
+                    )
+                        q-input.user-form-item(
+                            label = "Usuario"
+                            v-model = "username"
+                            color = "secondary"
+                            dense
+                            dark
+                        )
+                    q-td(
+                        key = "password"
+                    )
+                        q-input.user-form-item(
+                            type = "password"
+                            v-model = "password"
+                            label = "Contraseña"
+                            color = "secondary"
+                            dense
+                            dark
+                        )
+                    q-td(
+                        key = "role"
+                    )
+                        q-select.q-mt-sm.user-form-item(
+                            label="Rol"
+                            v-model="rol"
+                            :options="roles"
+                            color = "secondary"
+                            outlined
+                            dense
+                            dark
+                        )
+                    q-td.text-center(
+                        key = "actions"
+                    )
+                        q-btn(
+                            icon = "save"
+                            color = "primary"
+                            @click = "actionUser"
+                            dense
+                            round
+                        )
+                        q-btn.q-ml-lg(
+                            icon = "cancel"
+                            color = "negative"
+                            @click = "isNew = false"
+                            dense
+                            round
+                        )
+            template(
+                v-slot:body = "props"
+            )
+                q-tr
+                    q-td.ellipsis(
+                        key = "number"
+                        style = "max-width:100px"
+                        auto-width
+                    ) {{ props.row.number }}
+
+                    q-td.text-center.ellipsis(
+                        key = "user"
+                        style = "max-width:170px"
+                    ) {{ props.row.user }}
+
+                    q-td.text-center(
+                        key = "password"
+                    ) *******
+
+                    q-td.text-center.ellipsis(
+                        key = "role"
+                        style = "max-width:150px"
+                    ) {{ props.row.role }}
+                    
+                    q-td.text-center(
+                        key = "actions"
+                    )
+                        q-btn(
+                            icon = "edit"
+                            color = "teal"
+                            round
+                            dense
+                        )
+            
+            template(
+                v-slot:item = "props"
+            )
+                .q-pa-xs.col-xs-12.col-sm-6.grid-style-transition
+                    q-card.bg-blue-grey-9
+                        q-list
+                            .q-pa-sm
+                                q-item(
+                                    v-for = "col in props.cols.filter(c => c.name != 'number' && c.name != 'actions')"
+                                    :key = "col.name"
+                                )
+                                    q-item-section
+                                        q-item-label.text-teal-3 {{ col.label.toUpperCase() }}
+                                    
+                                    q-item-section.text-white(
+                                        side
+                                    )
+                                        q-item-label(
+                                            v-if = "col.name != 'password'"
+                                        ) {{ col.value }}
+                                        q-item-label(
+                                            v-else
+                                        ) *******
+                            q-separator.bg-grey
+                            .row.justify-center.q-pa-md
+                                q-btn(
+                                    icon = "edit"
+                                    color = "teal"
+                                    round
+                                    dense
+                                )
+            
+            template(
+                v-slot:bottom = "props"
+            )
+                .fit.row.justify-end.items-center.text-white
+                    .q-mr-lg Página: {{ props.pagination.page }} de {{ props.pagesNumber }}
+                    q-btn(
+                        icon = "arrow_back_ios"
+                        :disabled = "props.isFirstPage"
+                        @click = "props.prevPage"
+                        flat
+                        dense
+                        round
+                    )
+                    q-btn(
+                        icon = "arrow_forward_ios"
+                        :disabled = "props.isLastPage"
+                        @click = "props.nextPage"
+                        flat
+                        dense
+                        round
+                    )

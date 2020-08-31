@@ -1,0 +1,168 @@
+.charge
+    .row.justify-end.q-mb-lg
+        q-btn(
+            icon = "add"
+            text-color= "white"
+            color = "blue-grey-7"
+            @click = "$router.push({name:'ChargeForm'})"
+            fab
+        )
+
+    q-table.bg-blue-grey-14(
+        :data = "charges"
+        :columns = "columns"
+        row-key = "number"
+        table-header-class = "bg-teal-9"
+        :pagination.sync = "pagination"
+        :grid = "$q.screen.lt.md"
+        dark
+    )
+        template(
+            v-slot:body="props"
+        )
+            q-tr
+                q-td.ellipsis(
+                    key = "number"
+                    style = "max-width:100px"
+                    auto-width
+                ) {{ props.row.__index + 1 }}
+                
+                q-td.text-center.ellipsis(
+                    key = "entity"
+                    style = "max-width:150px"
+                ) {{ props.row.entity }}
+
+                q-td.text-center.ellipsis(
+                    key = "camp"
+                    style = "max-width:150px"
+                ) {{ props.row.camp }}
+
+                q-td.text-center.ellipsis(
+                    key = "list"
+                    style = "max-width:150px"
+                ) {{ props.row.list }}
+
+                q-td.text-center(
+                    key = "carrier"
+                    style = "min-width:120px"
+                )
+                    q-select(
+                        :options = "carriers"
+                        v-model = "carrier[props.row.id]"
+                        @input = "val => onChangeCarrier(props.row.id, val)"
+                        color = "teal"
+                        outlined
+                        dark
+                        dense
+                    )
+
+                q-td.text-center(
+                    key = "actions"
+                    style = "min-width:120px"
+                )
+                    .row.justify-center
+                        q-btn(
+                            icon = "remove_red_eye"
+                            color = "info"
+                            @click = "onShowDetails(props.row.id)"
+                            round
+                            dense
+                        )
+
+                        q-btn.q-ml-sm(
+                            icon = "edit"
+                            color = "primary"
+                            round
+                            dense
+                        )
+        template(
+            v-slot:item = "props"
+        )
+            .q-pa-xs.col-xs-12.col-sm-6.grid-style-transition
+                q-card.bg-blue-grey-9
+                    q-list
+                        .q-pa-sm
+                            q-item(
+                                v-for = "col in props.cols.filter(c => c.name != 'number' && c.name != 'actions')"
+                                :key = "col.name"
+                            )
+                                q-item-section
+                                    q-item-label.text-teal-3 {{ col.label.toUpperCase() }}
+                                
+                                q-item-section.text-white(
+                                    side
+                                )
+                                    q-item-label(
+                                        v-if = "col.name != 'carrier'"
+                                    ) {{ col.value }}
+                                    q-select(
+                                        v-else
+                                        :options = "carriers"
+                                        v-model = "carrier[props.row.id]"
+                                        @input = "val => onChangeCarrier(props.row.id, val)"
+                                        color = "teal"
+                                        outlined
+                                        dark
+                                        dense
+                                    )
+                        q-separator.bg-grey
+                        .row.justify-center.q-pa-md
+                            q-btn(
+                                icon = "remove_red_eye"
+                                color = "info"
+                                @click = "onShowDetails(props.row.id)"
+                                round
+                            )
+
+                            q-btn.q-ml-sm(
+                                icon = "edit"
+                                color = "primary"
+                                round
+                            )
+        
+        template(
+            v-slot:bottom = "props"
+        )
+            .fit.row.justify-end.items-center.text-white
+                .q-mr-lg Página: {{ props.pagination.page }} de {{ props.pagesNumber }}
+                q-btn(
+                    icon = "arrow_back_ios"
+                    :disabled = "props.isFirstPage"
+                    @click = "props.prevPage"
+                    flat
+                    dense
+                    round
+                )
+                q-btn(
+                    icon = "arrow_forward_ios"
+                    :disabled = "props.isLastPage"
+                    @click = "props.nextPage"
+                    flat
+                    dense
+                    round
+                )
+    
+    q-dialog(
+        v-model = "showDetails"
+    )
+        .bg-blue-grey-14.q-pa-lg
+            h6.text-white Detalles de carga
+            .row.q-mt-md
+                .column
+                    .text-teal-3 Entidad
+                    .text-teal-3 Campaña
+                    .text-teal-3 Lista
+                    .text-teal-3 Iteraciones
+                    .text-teal-3 Segundos entre iteraciones
+                    .text-teal-3 Proveedor
+                    .text-teal-3 Creación
+                    .text-teal-3 Última actualización
+                .column.q-ml-lg
+                    .text-white {{ popupData.entity }}
+                    .text-white {{ popupData.camp }}
+                    .text-white {{ popupData.list }}
+                    .text-white {{ popupData.iterations }}
+                    .text-white {{ popupData.seconds }}
+                    .text-white {{ popupData.carrier }}
+                    .text-white {{ popupData.created }}
+                    .text-white {{ popupData.updated }}

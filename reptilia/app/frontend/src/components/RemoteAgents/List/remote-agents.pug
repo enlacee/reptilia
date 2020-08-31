@@ -1,0 +1,210 @@
+.remote-agents-list
+    q-table.bg-blue-grey-14(
+        :data = "remoteAgents"
+        :columns = "columns"
+        row-key = "number"
+        table-header-class = "bg-teal-9"
+        :pagination.sync = "pagination"
+        :grid = "$q.screen.lt.md"
+        dark
+    )
+        template(
+            v-slot:body="props"
+        )
+            q-tr
+                q-td.ellipsis(
+                    key = "number"
+                    style = "max-width:100px"
+                    auto-width
+                ) {{ props.row.__index + 1 }}
+                
+                q-td.text-center.ellipsis(
+                    key = "user"
+                    style = "max-width:150px"
+                ) {{ props.row.user }}
+
+                q-td.text-center.ellipsis(
+                    key = "lines"
+                    style = "max-width: 100px"
+                )
+                    .row.justify-center(
+                        v-if = "isEditing[props.row.id]"
+                    )
+                        q-input(
+                            color = "teal"
+                            type = "number"
+                            v-model = "props.row.lines"
+                            text-align = "center"
+                            style = "max-width:100px"
+                            outlined
+                            dark
+                            dense
+                        )
+                    span(
+                        v-else
+                    ) {{ props.row.lines }}
+
+                q-td.text-center.ellipsis(
+                    key = "campaign_id"
+                    style = "max-width:70px"
+                ) {{ props.row.campaign_id }}
+
+                q-td.text-center(
+                    key = "status"
+                    style = "min-width:100px"
+                )
+                    q-checkbox(
+                        v-model = "props.row.status"
+                        label = "Activo"
+                        color = "teal"
+                    )
+                        //- @input = "(val) => onChangeStatus(props.row.id, val)"
+
+                q-td.text-center(
+                    key = "actions"
+                    style = "min-width:120px"
+                )
+                    .row.justify-center(
+                        v-if = "isEditing[props.row.id]"
+                    )
+                        q-btn(
+                            icon = "save"
+                            color = "primary"
+                            @click = "onSave(props.row.id, props.row.lines)"
+                            round
+                            dense
+                        )
+
+                        q-btn.q-ml-sm(
+                            icon = "cancel"
+                            color = "negative"
+                            @click = "onCancel(props.row)"
+                            round
+                            dense
+                        )
+                    
+                    .row.justify-center(
+                        v-else
+                    )
+                        q-btn(
+                            icon = "edit"
+                            color = "primary"
+                            @click = "onEdit(props.row.id, props.row.lines)"
+                            round
+                            dense
+                        )
+        template(
+            v-slot:item = "props"
+        )
+            .q-pa-xs.col-xs-12.col-sm-6.grid-style-transition
+                q-card.bg-blue-grey-9
+                    q-list
+                        .q-pa-sm
+                            q-item(
+                                v-for = "col in props.cols.filter(c => c.name != 'number' && c.name != 'actions')"
+                                :key = "col.name"
+                            )
+                                q-item-section
+                                    q-item-label.text-teal-3 {{ col.label.toUpperCase() }}
+                                
+                                q-item-section.text-white(
+                                    side
+                                )
+                                    div(
+                                        v-if = "col.name == 'lines'"
+                                    )
+                                        q-input(
+                                            v-if = "isEditing[props.row.id]"
+                                            color = "teal"
+                                            type = "number"
+                                            v-model = "props.row.lines"
+                                            text-align = "center"
+                                            style = "max-width:100px"
+                                            outlined
+                                            dark
+                                            dense
+                                        )
+                                        q-item-label(
+                                            v-else
+                                        ) {{ col.value }}
+                                    div(
+                                        v-else
+                                    )
+                                        q-item-label(
+                                            v-if = "col.name != 'status'"
+                                        ) {{ col.value }}
+                                        q-checkbox(
+                                            v-else
+                                            v-model = "props.row.status"
+                                            label = "Activo"
+                                            color = "teal"
+                                        )
+                        q-separator.bg-grey
+                        .row.justify-center.q-pa-md
+                            .row.justify-center(
+                                v-if = "isEditing[props.row.id]"
+                            )
+                                q-btn(
+                                    icon = "save"
+                                    color = "primary"
+                                    @click = "onSave(props.row.id, props.row.lines)"
+                                    round
+                                )
+
+                                q-btn.q-ml-sm(
+                                    icon = "cancel"
+                                    color = "negative"
+                                    @click = "onCancel(props.row)"
+                                    round
+                                )
+                            
+                            .row.justify-center(
+                                v-else
+                            )
+                                q-btn(
+                                    icon = "edit"
+                                    color = "primary"
+                                    @click = "onEdit(props.row.id, props.row.lines)"
+                                    round
+                                )
+        
+        template(
+            v-slot:bottom = "props"
+        )
+            .fit.row.justify-end.items-center.text-white
+                .q-mr-lg Página: {{ props.pagination.page }} de {{ props.pagesNumber }}
+                q-btn(
+                    icon = "arrow_back_ios"
+                    :disabled = "props.isFirstPage"
+                    @click = "props.prevPage"
+                    flat
+                    dense
+                    round
+                )
+                q-btn(
+                    icon = "arrow_forward_ios"
+                    :disabled = "props.isLastPage"
+                    @click = "props.nextPage"
+                    flat
+                    dense
+                    round
+                )
+    
+    q-dialog(
+        v-model = "showDetails"
+    )
+        .bg-blue-grey-14.q-pa-lg
+            h6.text-white Detalles de la lista
+            .row.q-mt-md
+                .column
+                    .text-teal-3 ID
+                    .text-teal-3 Nombre
+                    .text-teal-3 Campaña
+                    .text-teal-3 Estado
+                    .text-teal-3 Descripción
+                .column.q-ml-lg
+                    .text-white {{ popupData.id }}
+                    .text-white {{ popupData.name }}
+                    .text-white {{ popupData.campaign }}
+                    .text-white {{ popupData.status ? 'Activo' : 'Inactivo' }}
+                    .text-white {{ popupData.description }}

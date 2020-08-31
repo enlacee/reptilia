@@ -1,0 +1,86 @@
+.dashboard
+    .row
+        q-input(
+            v-model = "date"
+            color = "teal"
+            filled
+            dark
+            dense
+            :disable = "disableFilterDate"
+            readonly
+        )
+            template(
+                v-slot:append
+            )
+                q-icon.cursor-pointer(
+                    name = "event"
+                )
+                    q-popup-proxy(
+                        ref = "popupProxyRef"
+                        transition-show = "scale"
+                        transition-hide = "scale"
+                    )
+                        q-date(
+                            mask = "DD/MM/YYYY"
+                            color = "teal"
+                            v-model = "date"
+                            :locale = "locale"
+                            @input = "onChangeDate"
+                            today-btn
+                            minimal
+                            dark
+                        )
+
+    .row.q-mt-lg.justify-center
+        .column.items-center.q-mr-xl
+            .text-white.q-mb-md LLamadas totales
+            q-circular-progress.text-white(
+                show-value
+                :value="totalCalls.amount"
+                size = "100px"
+                color="secondary"
+                :thickness="0.2"
+                center-color = "grey-10"
+                track-color = "grey-3"
+                :max = 'totalCalls.max'
+                :indeterminate = "totalCalls.loading"
+            )
+        .column.items-center.q-mr-xl
+            .text-white.q-mb-md Clientes llamados
+            q-circular-progress.text-white(
+                show-value
+                :value="calledClients.amount"
+                size = "100px"
+                color="secondary"
+                :thickness="0.2"
+                center-color = "grey-10"
+                track-color = "grey-3"
+                :max = 'calledClients.max'
+                :indeterminate = "calledClients.loading"
+            )
+        .column.items-center.q-mr-xl
+            .text-white.q-mb-md Total de contactados
+            q-circular-progress.text-white(
+                show-value
+                :value="contactedClients.amount"
+                size = "100px"
+                color="primary"
+                :thickness="0.2"
+                center-color = "grey-10"
+                track-color = "grey-3"
+                :max = "contactedClients.max"
+                :indeterminate = "contactedClients.loading"
+            )
+        .column.items-center
+            .text-white.q-mb-md Números equivocados
+            q-circular-progress.text-white(
+                show-value
+                :value="wrongNumbers.amount"
+                size = "100px"
+                color="info"
+                :thickness="0.2"
+                center-color = "grey-10"
+                track-color = "grey-3"
+                :max = "wrongNumbers.max"
+                :indeterminate = "wrongNumbers.loading"
+            )

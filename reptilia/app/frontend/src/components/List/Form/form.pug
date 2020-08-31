@@ -1,0 +1,49 @@
+.list-form
+    q-btn(
+        icon = "navigate_before"
+        text-color = "white"
+        color = "teal"
+        size = "lg"
+        @click = "$router.push({name: 'List'})"
+        dense
+    )
+    .column.items-center
+        q-card.q-px-xl.column.items-center.own-card.bg-blue-grey-10
+            q-input.own-input.q-mb-md.q-mt-lg(
+                color = "teal-4"
+                ref = "listid"
+                label="Id *"
+                type="number"
+                v-model="id"
+                min="0"
+                dark
+                lazy-rules
+                :rules="[ val => val > 99 || 'Debe ser mayor o igual 100', val => !listIds.includes(val) || 'El ID ya existe']"
+                filled
+            )
+            q-input.own-input.q-mb-md(
+                color = "teal-4"
+                ref = "listname"
+                label="Nombre *"
+                v-model="name"
+                :rules="[ val => val.length > 1 || 'Al menos dos caracteres' ]"
+                dark
+                lazy-rules
+                filled
+            )
+            q-select.own-input(
+                color = "teal-4"
+                ref = "listcampaign"
+                label="Campaña *"
+                v-model="campaign"
+                :options="campaigns"
+                outlined
+                :rules="[ val => campaign.value != undefined || 'Debe seleccionar uno' ]"
+                lazy-rules
+                dark
+            )
+            q-btn.q-my-lg(
+                color="teal"
+                @click="save"
+                size = "lg"
+            ) Crear

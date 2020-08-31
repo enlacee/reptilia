@@ -1,0 +1,13 @@
+# dirs
+env
+__pycache__
+.vscode
+
+# files
+.env
+test.py
+*.csv
+docs
+wsgi.py
+rept.log
+.env.old

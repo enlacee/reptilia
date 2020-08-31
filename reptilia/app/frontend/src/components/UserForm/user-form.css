@@ -1,0 +1,43 @@
+.user-form{
+    max-width: 300px;
+}
+.user-form-item{
+    min-width: 100px;
+}
+
+@media (min-width: 780px) {
+    .user-form{
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1024px;
+    }
+    .user-form-item{
+        min-width: 48%;
+    }
+
+    .user-form-item:nth-child(even){
+        margin-left: 15px;
+    }
+}
+
+
+@media (min-width: 900px) {
+    .user-form{
+        display: flex;
+        justify-content: space-between;
+    }
+    .user-form-item{
+        min-width: 150px;
+    }
+
+    .user-form-item:nth-child(even){
+        margin-left: 0px;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .user-form-item{
+        min-width: 210px;
+    }
+}

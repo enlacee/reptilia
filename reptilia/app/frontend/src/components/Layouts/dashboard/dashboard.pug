@@ -1,0 +1,82 @@
+q-layout.bg-blue-grey-10
+    q-header(
+        elevated
+        v-model = "headerState"
+    )
+        q-toolbar.bg-grey-9.text-white.q-py-sm
+            q-btn(
+                color = "white"
+                icon = "menu"
+                @click = "drawer = !drawer"
+                round
+                dense
+                flat
+            )
+
+            q-toolbar-title.q-ml-lg {{ title }}
+
+            .q-mr-lg
+                q-select(
+                    v-model = "entity"
+                    color = "teal"
+                    :options = "entities"
+                    @input = "updateEntity"
+                    dense
+                    dark
+                    filled
+                )
+
+            q-btn(
+                color = "white"
+                text-color = "grey-10"
+                icon = "person"
+                round
+            )
+                q-menu
+                    q-list
+                        q-item(
+                            clickable
+                            v-close-popup
+                        )
+                            q-item-section(
+                                @click = "logout"
+                            ) Cerrar Sesión
+
+    q-drawer(
+        v-model = "drawer"
+        :width="200"
+        :breakpoint="1040"
+        :mini = "miniDrawState"
+        @mouseover="miniDrawState = false"
+        @mouseout="miniDrawState = true"
+        elevated
+        :show-if-above = "ifAbove"
+    )
+        q-scroll-area.fit.bg-grey-10
+            q-list(
+                padding
+                dark
+            )
+                q-item(
+                    v-for = "(module, key) in modules"
+                    :key = "key"
+                    clickable
+                    v-ripple
+                    @click = "route(module.route_name, module.id)"
+                    @click.middle = "newTab(module.route_name)"
+                    :active = "actives[module.id]"
+                    active-class = "text-secondary"
+                )
+                    q-item-section(
+                        avatar
+                    )
+                        q-icon(
+                            :name = "module.icon"
+                        )
+                    q-item-section {{module.name}}
+    q-page-container
+        q-page.page(
+            padding
+        )
+            .q-pa-md
+                router-view

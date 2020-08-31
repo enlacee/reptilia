@@ -1,0 +1,175 @@
+.charge-form
+    q-btn(
+        icon = "navigate_before"
+        text-color = "white"
+        color = "teal"
+        size = "lg"
+        @click = "$router.push({name: 'ChargeList'})"
+        dense
+    )
+    .column.items-center
+        q-card.q-pa-xl.column.items-center.bg-blue-grey-10
+            .row.justify-around.q-mb-md
+                q-select.own-input(
+                    color = "teal-1"
+                    label="Canal *"
+                    v-model="channel"
+                    :options="channels"
+                    filled
+                    dark
+                )
+
+            .row.justify-around.q-mb-md(
+                v-if = "channel.label == 'CALL'"
+            )
+                q-select.own-input(
+                    color = "teal-1"
+                    label="Lista *"
+                    v-model="list"
+                    :options="lists"
+                    outlined
+                    dark
+                )
+
+                q-select.own-input(
+                    color = "teal-1"
+                    label="Proveedor *"
+                    v-model="carrier"
+                    :options="carriers"
+                    outlined
+                    dark
+                )
+
+            .row.justify-around.q-my-md(v-if="false")
+                q-input.own-input(
+                    color = "teal-1"
+                    type="number"
+                    label="Número de iteraciones"
+                    v-model="iterations"
+                    min="0"
+                    max="10"
+                    dark
+                )
+
+                q-input.own-input(
+                    color = "teal-1"
+                    type="number"
+                    label="Volver a llamar en..."
+                    v-model="seconds"
+                    min="60"
+                    max="10000"
+                    dark
+                )
+
+            .row.justify-around.items-center.q-my-sm
+                q-uploader(
+                    color = "blue-grey-10"
+                    ref="uploader"
+                    label="Subir archivo"
+                    field-name="file"
+                    accept=".xlsx,.xls"
+                    @added="onFileSelected"
+                    @removed="allowMatch = false"
+                    hide-upload-btn
+                    url
+                    dark
+                )
+
+                q-btn.q-ml-lg(
+                    v-if = 'allowMatch'
+                    icon = "drag_indicator"
+                    color = "primary"
+                    @click = "dialogStatus = true"
+                    :loading = "btnMatchLoad"
+                    round
+                )
+
+                q-dialog(
+                    v-model = "dialogStatus"
+                    full-width
+                )
+                    .q-pa-lg.bg-blue-grey-14
+                        .row.justify-center.q-mb-xl
+                            .column.q-mr-xl
+                                h6.text-white Relacionar campos y columnas
+                                .text-white En caso de los teléfonos, solo seleccione una de las columnas en serie.
+                            q-btn(
+                                color = "teal"
+                                @click = "resetMatcher"
+                            ) Resetear
+                        .row.justify-center
+                            .column.q-mr-xl
+                                q-btn.q-mb-md(
+                                    :color = "dataColumn.code.class"
+                                    @click = "clickData('code')"
+                                ) Codigo
+                                q-btn.q-mb-md(
+                                    :color = "dataColumn.name.class"
+                                    @click = "clickData('name')"
+                                ) Nombre
+                                q-btn.q-mb-md(
+                                    :color = "dataColumn.product.class"
+                                    @click = "clickData('product')"
+                                ) Producto
+                                q-btn.q-mb-md(
+                                    :color = "dataColumn.amount.class"
+                                    @click = "clickData('amount')"
+                                ) Monto
+                                q-btn.q-mb-md(
+                                    :color = "dataColumn.currency.class"
+                                    @click = "clickData('currency')"
+                                ) Moneda
+                                q-btn.q-mb-md(
+                                    :color = "dataColumn.date.class"
+                                    @click = "clickData('date')"
+                                ) Fecha o mora
+                                q-btn(
+                                    :color = "dataColumn.phone.class"
+                                    @click = "clickData('phone')"
+                                ) Telefonos
+
+                            .column.q-ml-md(
+                                v-for = "i in Math.ceil(this.excelColumns.length/7)"
+                            )
+                                q-btn.q-mb-md(
+                                    :key = "index"
+                                    v-for = "(col, index) in excelColumns.filter((val, j) => j >= 7 * (i-1) && j < 7*i)"
+                                    @click = "tryMatch(col)"
+                                    :color = "dataColMatch[col]!= undefined ? dataColMatch[col]: 'grey'"
+                                ) {{ col }}
+
+                q-dialog(
+                    v-model = "report.show"
+                )
+                    .row.up__report.q-pa-lg.bg-blue-grey-14
+                        .column
+                            .text-teal-3 Procesos pseudo paralelos:
+                            .text-teal-3 Tiempo de carga:
+                            .text-teal-3 Mensaje:
+                            .text-teal-3 Clientes insertados:
+                            .text-teal-3 Productos insertados:
+                            .text-teal-3 Registros duplicados:
+                            .text-teal-3 Registros sin codigo, producto o teléfonos:
+
+                        .column.q-ml-md
+                            .text-white {{report.process}}
+                            .text-white {{report.time}}
+                            .text-white {{report.msg}}
+                            .text-white {{report.clients}}
+                            .text-white {{report.products}}
+                            .text-white {{report.duplicates}}
+                            .text-white {{report.out}}
+
+            .row
+                q-btn.q-mt-lg(
+                    color="teal-9"
+                    size="18px"
+                    @click="upload"
+                    :loading="loading"
+                ) Subir
+
+                q-btn.q-mt-lg.q-ml-lg(
+                    v-if = "isReport"
+                    :color="chargeLoadedClass"
+                    @click="report.show = true"
+                ) Mostrar reporte

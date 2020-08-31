@@ -1,0 +1,48 @@
+.all-center.bg-blue-grey-10
+    q-card.q-py-lg.q-px-xl.column.items-center.own-card.bg-white
+
+        h4.q-mb-lg Login
+
+        q-input.q-mb-sm.own-input(
+            ref = "user"
+            label="Email o usuario"
+            v-on:keyup.enter="enter"
+            v-model="username"
+            color = "secondary"
+            outlined
+        )
+            template(
+                v-slot:prepend
+            )
+                q-icon(
+                    name="mail"
+                )
+
+        q-input.q-mb-lg.own-input(
+            ref = "pass"
+            type="password"
+            label="Password"
+            v-model="password"
+            v-on:keyup.enter="enter"
+            color = "secondary"
+            outlined
+        )
+            template(
+                v-slot:prepend
+            )
+                q-icon(
+                    name="vpn_key"
+                )
+
+        //- q-select.q-mb-lg.own-input(
+        //-     label="Entidad"
+        //-     v-model="entity"
+        //-     :options="entities"
+        //-     color = "secondary"
+        //-     filled
+        //- )
+
+        q-btn.own-button(
+            color="teal"
+            @click="login"
+        ) Ingresar

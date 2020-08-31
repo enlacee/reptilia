@@ -1,0 +1,137 @@
+.charge
+    q-table.bg-blue-grey-14(
+        :data = "campaigns"
+        :columns = "columns"
+        row-key = "number"
+        table-header-class = "bg-teal-9"
+        :pagination.sync = "pagination"
+        :grid = "$q.screen.lt.sm"
+        dark
+    )
+        template(
+            v-slot:body="props"
+        )
+            q-tr
+                q-td.ellipsis(
+                    key = "number"
+                    style = "max-width:100px"
+                    auto-width
+                ) {{ props.row.__index + 1 }}
+                
+                q-td.text-center.ellipsis(
+                    key = "name"
+                    style = "max-width:150px"
+                ) {{ props.row.name }}
+
+                q-td.text-center.ellipsis(
+                    key = "id"
+                    style = "max-width:70px"
+                ) {{ props.row.id }}
+
+                q-td.text-center(
+                    key = "status"
+                    style = "min-width:110px"
+                )
+                    q-checkbox(
+                        v-model = "props.row.status"
+                        label = "Activo"
+                        color = "teal"
+                        @input = "(val) => onChangeStatus(props.row.id, val)"
+                    )
+
+                q-td.text-center(
+                    key = "actions"
+                    style = "min-width:150px"
+                )
+                    .row.justify-center
+                        q-btn(
+                            icon = "remove_red_eye"
+                            color = "info"
+                            @click = "onShowDetails(props.row.id)"
+                            round
+                            dense
+                        )
+
+                        q-btn.q-ml-sm(
+                            icon = "edit"
+                            color = "primary"
+                            round
+                            dense
+                        )
+        template(
+            v-slot:item = "props"
+        )
+            .q-pa-xs.col-xs-12.col-sm-6.grid-style-transition
+                q-card.bg-blue-grey-9
+                    q-list
+                        q-item(
+                            v-for = "col in props.cols.filter(c => c.name != 'number' && c.name != 'actions')"
+                            :key = "col.name"
+                        )
+                            q-item-section
+                                q-item-label.text-teal-3 {{ col.label.toUpperCase() }}
+                            
+                            q-item-section.text-white(
+                                side
+                            )
+                                q-item-label(
+                                    v-if = "col.name != 'status'"
+                                ) {{ col.value }}
+                                q-checkbox(
+                                    v-else
+                                    v-model = "props.row.status"
+                                    label = "Activo"
+                                    color = "teal"
+                                    @input = "(val) => onChangeStatus(props.row.id, val)"
+                                )
+                        q-separator.bg-grey
+                        .row.justify-center.q-pa-md
+                            q-btn(
+                                icon = "remove_red_eye"
+                                color = "info"
+                                @click = "onShowDetails(props.row.id)"
+                                round
+                                dense
+                            )
+
+                            q-btn.q-ml-sm(
+                                icon = "edit"
+                                color = "primary"
+                                round
+                                dense
+                            )
+        
+        template(
+            v-slot:bottom = "props"
+        )
+            .fit.row.justify-end.items-center.text-white
+                .q-mr-lg Página: {{ props.pagination.page }} de {{ props.pagesNumber }}
+                q-btn(
+                    icon = "arrow_back_ios"
+                    :disabled = "props.isFirstPage"
+                    @click = "props.prevPage"
+                    flat
+                    dense
+                )
+                q-btn(
+                    icon = "arrow_forward_ios"
+                    :disabled = "props.isLastPage"
+                    @click = "props.nextPage"
+                    flat
+                    dense
+                )
+    
+    q-dialog(
+        v-model = "showDetails"
+    )
+        .bg-blue-grey-14.q-pa-lg
+            h6.text-white Detalles de carga
+            .row.q-mt-md
+                .column
+                    .text-teal-3 Nombre
+                    .text-teal-3 ID
+                    .text-teal-3 Estado
+                .column.q-ml-lg
+                    .text-white {{ popupData.name }}
+                    .text-white {{ popupData.id }}
+                    .text-white {{ popupData.status }}

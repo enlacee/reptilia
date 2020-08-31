@@ -1,0 +1,14 @@
+flask
+pymysql
+pandas
+python-dotenv
+flask-cors
+pexpect
+xlrd
+flask-jwt-extended
+passlib
+requests
+pymongo
+flask-socketio
+paramiko
+scp

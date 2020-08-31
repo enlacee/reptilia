@@ -1,0 +1,36 @@
+.campaign-form
+    q-btn(
+        icon = "navigate_before"
+        text-color = "white"
+        color = "teal"
+        size = "lg"
+        @click = "$router.push({name: 'CampaignList'})"
+        dense
+    )
+    .column.items-center
+        q-card.q-py-lg.q-px-xl.column.items-center.own-card.bg-blue-grey-14
+            q-input.own-input(
+                color = "teal-4"
+                ref = "campaignId"
+                label="Id *"
+                type="number"
+                v-model="id"
+                min="0"
+                dark
+                :rules="[ val => val > 99 || 'Debe ser mayor o igual 100', val => !campaignIds.includes(val) || 'El ID ya existe']"
+                lazy-rules
+            )
+            q-input.own-input.q-mb-sm(
+                color = "teal-4"
+                ref = "campaignName"
+                label="Nombre *"
+                v-model="name"
+                :rules="[ val => val.length > 1 || 'Al menos dos caracteres' ]"
+                dark
+                lazy-rules
+            )
+            q-btn.q-my-sm(
+                color="teal"
+                @click="save"
+                size="lg"
+            ) Crear
