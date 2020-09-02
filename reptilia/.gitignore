@@ -12,4 +12,6 @@ wsgi.py
 rept.log
 .env.old
 
-./app/frontend/node_modules
+app/frontend/node_modules
+bin
+lib

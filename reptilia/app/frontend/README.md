@@ -1,5 +1,20 @@
 # frontend
 
+## Requirements
+
+	nvm (sugest for multiples nodes)
+	node v14.8.0
+	npm v6.14.7
+
+Install nvm (multiple version node)
+
+	nvm install 14.8.0
+	nvm use node
+
+change nodeversion
+
+	nvm which 8.0
+
 ## Project setup
 ```
 npm install
