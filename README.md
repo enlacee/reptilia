@@ -1,7 +1,15 @@
-# Project Reptilia (App Loads Data)
+# Project Reptilia
+
+## Instalación de aplicaciones
+
+1. [BACKEND Python](reptilia/README.md)
+2. [FRONTEND Javascript](reptilia/app/frontend/README.md)
+
+## Carga de data
 
 1. [Documentación Carga Data miBanco](docs/01-carga-mibanco.md)
 2. 
+
 
 ## Estandar Nomenclatura
 
