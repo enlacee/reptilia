@@ -34,9 +34,10 @@
 SELECT * FROM _tmp_bot_260820 LIMIT 1;
 ```
 
-### 04: Crear campos y tabla: **_tmp_mibanco_sobre_out_26**
-` Dia referencia se extrae del archivo **BOT_26.xlsx** es = 26`
-` Ojo que el campo PROXIMO_VENCIMIENTO = 27. Se le suma 1 dia`
+### 04: Crear campos y tabla: **_tmp_mibanco_sobre_out_260820**
+` Dia referencia se extrae del archivo **BOT_26.xlsx** es = 26`  
+` Si la fecha de vencimiento cae domingo o feriado sera el siguiente dia`  
+` Ojo que el campo PROXIMO_VENCIMIENTO = 27. Se le suma 1 dia`  
 
 ```SQL
 ALTER TABLE _tmp_bot_260820 add column `Numero Asesor` varchar(100);
@@ -49,7 +50,7 @@ Esto es para que creé la tabla y la siguiente consulta SQL
 lo cargue en la tabla automaticamente.
 
 ```SQL
-CREATE TABLE _tmp_mibanco_sobre_out_26
+CREATE TABLE _tmp_mibanco_sobre_out_260820
 SELECT 
     c.DOCUMENTO codigo,
     c.NOMBRE_CLIENTE nombre,
@@ -69,10 +70,18 @@ WHERE
     c.PROXIMO_VENCIMIENTO = '2020-08-27';
 ```
 
+SQL WHERE para incluir dos fechas como: Sabado y Lunes.
+
+```SQL
+WHERE
+    c.PROXIMO_VENCIMIENTO = '2020-09-05'
+		OR c.PROXIMO_VENCIMIENTO = '2020-09-07'
+```
+
 ### 05: Ahora verifica si los registros fueron creados en la tabla con los registros
 
 ```SQL
-SELECT count(*) FROM _tmp_mibanco_sobre_out_26;
+SELECT count(*) FROM _tmp_mibanco_sobre_out_260820;
 ```
 
 ### 06: Exportar archivo en formato .xlsx
@@ -81,9 +90,9 @@ SELECT count(*) FROM _tmp_mibanco_sobre_out_26;
 		dba_sion
 		tables -> export wizard like file .txt
 		- abrir excel LIBREOFFICE (copiar del .txt al libreooffice file) y guardar archivo como  
-		  _tmp_mibanco_sobre_out_26.xlsx
+		  _tmp_mibanco_sobre_out_260820.xlsx
 
-`revisar los campos critos del archivo _tmp_mibanco_sobre_out_26.xlsx` 
+`revisar los campos critos del archivo _tmp_mibanco_sobre_out_260820.xlsx` 
 
 	monto = en decimales
 	fecha = formato Y-m-d -> verificar la fecha de vencimiento: 2020-08-27
@@ -135,8 +144,8 @@ Ir al menu hamburguesa:
 	password: *****
 
 ```SQL
-select * from tbl_client_data where list_id = 80260820;
-select * from tbl_client_data where list_id = 70270820 AND client_id like "%3338938%"
+select select count(id) from tbl_client_data where list_id = 80260820;
+select * from tbl_client_data where list_id = 80260820 AND client_id like "%3338938%"
 ```
 
 Aquí verificar cuantos registros se guardarón y verificar algún registro para mayor seguridad.
