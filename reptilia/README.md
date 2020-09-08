@@ -29,5 +29,5 @@ Current ip on LAN: example: 192.168.1.22
 
 Cargar el servidor:
 
-	python3.8 run.py
+	python3.8 reptilia/run.py
 
