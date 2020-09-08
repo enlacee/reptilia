@@ -31,7 +31,7 @@
 ### 03: Verificar si la tabla fue creada
 	
 ```SQL
-SELECT * FROM _tmp_bot_260820 LIMIT 1;
+SELECT count(*) FROM _tmp_bot_260820 LIMIT 1;
 ```
 
 ### 04: Crear campos y tabla: **_tmp_mibanco_sobre_out_260820**
@@ -43,6 +43,8 @@ SELECT * FROM _tmp_bot_260820 LIMIT 1;
 ALTER TABLE _tmp_bot_260820 add column `Numero Asesor` varchar(100);
 ALTER TABLE _tmp_bot_260820 add column `Asesor` varchar(100);
 ALTER TABLE _tmp_bot_260820 CHANGE `COD_CLIENTE` `idcliente` varchar(100);
+-- OR
+ALTER TABLE _tmp_bot_260820 CHANGE `codigo` `idcliente` varchar(100);
 ```
 
 Esta siguiente sentencia no tiene (punto y coma) `;`.
@@ -144,7 +146,7 @@ Ir al menu hamburguesa:
 	password: *****
 
 ```SQL
-select select count(id) from tbl_client_data where list_id = 80260820;
+select count(id) from tbl_client_data where list_id = 80260820;
 select * from tbl_client_data where list_id = 80260820 AND client_id like "%3338938%"
 ```
 
