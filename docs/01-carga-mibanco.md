@@ -32,6 +32,7 @@
 	
 ```SQL
 SELECT count(*) FROM _tmp_bot_260820 LIMIT 1;
+SELECT * FROM _tmp_bot_260820 LIMIT 1;
 ```
 
 ### 04: Crear campos y tabla: **_tmp_mibanco_sobre_out_260820**
@@ -119,7 +120,7 @@ Ir al menu hamburguesa:
 		-> ico agregar 
 			-> 80 = identificado de mibanco
 			-> ID = 80260820
-			-> NOMBRE = MiBancoSobrendeudamiento80260820
+			-> NOMBRE = MiBanSobre80260820
 			-> CAMPAÑA = mibanco_sobre_endeudamientos
                     
 ### 10: Crear una carga
