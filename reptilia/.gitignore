@@ -4,13 +4,11 @@ __pycache__
 .vscode
 
 # files
-.env
 test.py
 *.csv
 docs
 wsgi.py
 rept.log
-.env.old
 
 app/frontend/node_modules
 bin

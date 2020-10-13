@@ -1,17 +1,17 @@
 # Project Reptilia
 
-## Instalación de aplicaciones
+### Instalación de aplicaciones
 
 1. [BACKEND Python](reptilia/README.md)
 2. [FRONTEND Javascript](reptilia/app/frontend/README.md)
 
-## Carga de data
+### Carga de data
 
 1. [Documentación Carga Data miBanco](docs/01-carga-mibanco.md)
 2. 
 
 
-## Estandar Nomenclatura
+### Estandar Nomenclatura
 
 EMPRESAS: 	MiBanco, Movistar  
 CAMPAÑA:	Proyecto que se lleva con la finalidad de alcanzar un objetivo.
@@ -19,7 +19,7 @@ CAMPAÑA:	Proyecto que se lleva con la finalidad de alcanzar un objetivo.
 	- Campaña
 		- Tiene 1 lista o muchas.
 
-## Nomenclatura
+### Nomenclatura
 Prefijos para manejar con relativo orden el sistema de carga.
 
 CAMPAÑAS:
@@ -35,4 +35,15 @@ LISTAS: `80270820`
 	08 -> mes
 	20 -> año
 
+
+
+## Mejoras Anibal
+
+### 2020-09-11
+
+1. mejorar la url de backend y frontend: IP CONFIGURACION
+	/reptilia/run.py
+	/reptilia/reptilia/.env:11
+	/reptilia/app/frontend/.env:1
+	/reptilia/.env
 

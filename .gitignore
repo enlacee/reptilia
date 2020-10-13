@@ -1,0 +1,7 @@
+# BACKEND
+reptilia/.env
+rept.log
+
+# FRONTEND
+reptilia/app/frontend/.env
+reptilia/app/static/*

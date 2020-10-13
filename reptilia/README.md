@@ -31,3 +31,5 @@ Cargar el servidor:
 
 	python3.8 reptilia/run.py
 
+El servidor se creara y sera accesible `192.168.1.22:5000`
+

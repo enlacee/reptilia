@@ -18,7 +18,7 @@ Install nvm (multiple version node)
 	nvm install 14.8.0
 	nvm use node
 
-change nodeversion (alternative)
+change nodeversion (alternative example)
 
 	nvm which 8.0
 
