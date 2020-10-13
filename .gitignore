@@ -1,7 +1,10 @@
 # BACKEND
 reptilia/.env
+reptilia/.env.production
+
 rept.log
 
 # FRONTEND
 reptilia/app/frontend/.env
 reptilia/app/static/*
+reptilia/app/templates/index.html
